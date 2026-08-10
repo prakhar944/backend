@@ -4,6 +4,7 @@ import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 
 
@@ -194,7 +195,7 @@ try{
       secure: true
    }
 
-   const {accessToken, newrefreshToken} = await generateAccessAndRefreshTokens(user._id)
+   const {accessToken, refreshToken} = await generateAccessAndRefreshTokens(user._id)
 
 
    return res
@@ -204,7 +205,8 @@ try{
    .json(
       new ApiResponse(
          200,
-         {accessToken, refreshToken: newRefreshToken},
+         {accessToken, 
+          refreshToken},
          "Access Token Refreshed Successfully"
       )
    )
@@ -365,7 +367,7 @@ const getUserChannelProfile = asyncHandler( async (req, res) => {
          $lookup: {
             from: "subscriptions",
             localField: "_id",
-            foreignfield: "channel",
+            foreignField: "channel",
             as: "subscribers"
          }
       },
@@ -373,7 +375,7 @@ const getUserChannelProfile = asyncHandler( async (req, res) => {
          $lookup: {
             from: "subscriptions",
             localField: "_id",
-            foreignfield: "subscriber",
+            foreignField: "subscriber",
             as: "subscribedTo"
          }
       },
@@ -435,14 +437,14 @@ const getWatchHistory = asyncHandler( async (req, res) => {
          $lookup: {
             from: "videos",
             localField: "watchHistory",
-            foreignfield: "_id",
+            foreignField: "_id",
             as: "watchHistory",
             pipeline: [
                {
                   $lookup: {
                      from: "users",
-                     localfield: 'owner',
-                     foreignfield: "_id",
+                     localField: 'owner',
+                     foreignField: "_id",
                      as: "owner",
                      pipeline: [
                         {
