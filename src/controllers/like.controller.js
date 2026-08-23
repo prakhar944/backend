@@ -171,7 +171,7 @@ const getLikedVideos = asyncHandler( async (req, res) => {
         }
     ];
 
-    const result = await Like.aggregatePaginate( 
+    const result = await Like.aggregatePaginate(
         likes,
         {
             page: Number(page),
