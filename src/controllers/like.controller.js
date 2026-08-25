@@ -149,7 +149,7 @@ const getLikedVideos = asyncHandler( async (req, res) => {
             }
         },
         {
-            $unwind: "videoOwner"
+            $unwind: "$videoOwner"
         },
         {
             $project: {

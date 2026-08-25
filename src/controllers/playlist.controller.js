@@ -133,7 +133,7 @@ const getPlaylistById = asyncHandler(async (req, res) => {
             }
         },
         {
-            $unwind:"owner"
+            $unwind:"$owner"
         },
         {
             $project: {
