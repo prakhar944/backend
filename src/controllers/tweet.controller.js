@@ -8,7 +8,7 @@ const createTweet = asyncHandler(async (req, res) => {
     //TODO: create tweet
     
     const{content} = req.body
-        if(!content || !content.trim() === ""){
+        if(!content || content.trim() === ""){
         throw new ApiError( 400, " Content is Required for Tweet ")
     }
 

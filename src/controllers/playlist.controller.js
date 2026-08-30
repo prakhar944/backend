@@ -8,7 +8,7 @@ import {Playlist} from "../models/playlist.model.js"
 const createPlaylist = asyncHandler(async (req, res) => {
     const {name, description} = req.body
      
-    if(!name || ! !description){
+    if(!name || !description){
         throw new ApiError( 400 , " Name or description of playlist missing")
     }
     
